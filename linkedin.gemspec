@@ -1,49 +1,25 @@
-# -*- encoding: utf-8 -*-
-Gem::Specification.new do |s|
-  s.name = %q{linkedin}
-  s.version  = "0.2.2"
-  s.platform = Gem::Platform::RUBY
+# encoding: utf-8
+require File.expand_path('../lib/linked_in/version', __FILE__)
 
-  s.authors = ["Wynn Netherland", "Josh Kalderimis"]
-  s.email   = ["wynn.netherland@gmail.com", "josh.kalderimis@gmail.com"]
-
-  s.homepage    = %q{http://github.com/pengwynn/linkedin}
-  s.summary     = %q{Ruby wrapper for the LinkedIn API}
-  s.description = %q{Ruby wrapper for the LinkedIn API}
-
-  s.date = %q{2010-03-01}
-
-  s.rdoc_options  = ["--charset=UTF-8"]
-  s.extra_rdoc_files = ["README.markdown", "LICENSE"]
-
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ["lib"]
-
-  if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
-    s.specification_version = 3
-
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<oauth>,       ["~> 0.4.0"])
-      s.add_runtime_dependency(%q<nokogiri>,    ["~> 1.4.4"])
-      s.add_development_dependency(%q<rspec>,   ["~> 2.4.0"])
-      s.add_development_dependency(%q<rake>,    ["~> 0.8.7"])
-      s.add_development_dependency(%q<webmock>, ["~> 1.6.0"])
-    else
-      s.add_dependency(%q<oauth>,     ["~> 0.4.0"])
-      s.add_dependency(%q<nokogiri>,  ["~> 1.4.4"])
-      s.add_dependency(%q<rspec>,     ["~> 2.4.0"])
-      s.add_dependency(%q<rake>,      ["~> 0.8.7"])
-      s.add_dependency(%q<webmock>,   ["~> 1.6.0"])
-    end
-  else
-    s.add_dependency(%q<oauth>,     ["~> 0.4.0"])
-    s.add_dependency(%q<nokogiri>,  ["~> 1.4.4"])
-    s.add_dependency(%q<rspec>,     ["~> 2.4.0"])
-    s.add_dependency(%q<rake>,      ["~> 0.8.7"])
-    s.add_dependency(%q<webmock>,   ["~> 1.6.0"])
-  end
+Gem::Specification.new do |gem|
+  gem.add_dependency 'hashie', '~> 1.2.0'
+  gem.add_dependency 'multi_json', '~> 1.0.3'
+  gem.add_dependency 'oauth', '~> 0.4.5'
+  gem.add_development_dependency 'json', '~> 1.6'
+  gem.add_development_dependency 'rake', '~> 0.9'
+  gem.add_development_dependency 'rdoc', '~> 3.8'
+  gem.add_development_dependency 'rspec', '~> 2.6'
+  gem.add_development_dependency 'simplecov', '~> 0.5'
+  gem.add_development_dependency 'vcr', '~> 1.10'
+  gem.add_development_dependency 'webmock', '~> 1.7'
+  gem.authors = ["Wynn Netherland", "Josh Kalderimis"]
+  gem.description = %q{Ruby wrapper for the LinkedIn API}
+  gem.email = ['wynn.netherland@gmail.com', 'josh.kalderimis@gmail.com']
+  gem.files = `git ls-files`.split("\n")
+  gem.homepage = 'http://github.com/pengwynn/linkedin'
+  gem.name = 'linkedin'
+  gem.require_paths = ['lib']
+  gem.summary = gem.description
+  gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
+  gem.version = LinkedIn::VERSION::STRING
 end
-

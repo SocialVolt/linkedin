@@ -1,41 +1,19 @@
-require 'rake'
+#!/usr/bin/env rake
 
-begin
-  require 'bundler/setup'
-  Bundler::GemHelper.install_tasks
-rescue LoadError
-  puts 'although not required, bundler is recommened for running the tests'
-end
-
-
-task :default => :spec
+require 'bundler'
+Bundler::GemHelper.install_tasks
 
 require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new do |t|
-  t.rspec_opts = ["--color", '--format doc']
-end
+RSpec::Core::RakeTask.new(:spec)
 
+task :test => :spec
+task :default => :spec
 
-begin
-  require 'rcov/rcovtask'
-  Rcov::RcovTask.new do |test|
-    test.libs << 'test'
-    test.pattern = 'test/**/test_*.rb'
-    test.verbose = true
-  end
-rescue LoadError
-  task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
-  end
-end
-
-
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
+require 'rdoc/task'
+require File.expand_path('../lib/linked_in/version', __FILE__)
+RDoc::Task.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "linkedin #{version}"
+  rdoc.title = "linkedin #{LinkedIn::VERSION::STRING}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
