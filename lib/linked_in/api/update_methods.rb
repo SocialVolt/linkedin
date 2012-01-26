@@ -15,10 +15,10 @@ module LinkedIn
       #   post(path, share_to_xml(defaults.merge(options)))
       # end
       #
-      # def update_comment(network_key, comment)
-      #   path = "/people/~/network/updates/key=#{network_key}/update-comments"
-      #   post(path, comment_to_xml(comment))
-      # end
+      def update_comment(network_key, comment)
+        path = "/people/~/network/updates/key=#{network_key}/update-comments"
+        post(path, comment_to_xml(comment))
+      end
       
       %w[like unlike].each do |liking|
         define_method liking do |network_key|
