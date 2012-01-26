@@ -19,6 +19,14 @@ module LinkedIn
       #   path = "/people/~/network/updates/key=#{network_key}/update-comments"
       #   post(path, comment_to_xml(comment))
       # end
+      
+      %w[like unlike].each do |liking|
+        define_method liking do |network_key|
+          path = "/people/~/network/updates/key=#{network_key}/is-liked"
+          xml = "<?xml version='1.0' encoding='UTF-8'?><is-liked>#{liking == 'like'}</is-liked>"
+          put(path, xml)
+        end
+      end
       #
       # def update_network(message)
       #   path = "/people/~/person-activities"
