@@ -22,9 +22,8 @@ module LinkedIn
       
       %w[like unlike].each do |liking|
         define_method liking do |network_key|
-          path = "/people/~/network/updates/key=#{network_key}/is-liked"
-          xml = "<?xml version='1.0' encoding='UTF-8'?><is-liked>#{liking == 'like'}</is-liked>"
-          put(path, xml)
+          path = "/people/~/network/updates/key=#{network_key}/is-liked"w
+          put(path, {:"is-liked" => liking == 'like'}.to_json, "Content-Type" => "application/json")
         end
       end
       #
