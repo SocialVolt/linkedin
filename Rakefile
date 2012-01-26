@@ -10,7 +10,7 @@ task :test => :spec
 task :default => :spec
 
 require 'rdoc/task'
-require File.expand_path('../lib/linked_in//version', __FILE__)
+require File.expand_path('../lib/linked_in/version', __FILE__)
 RDoc::Task.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "linkedin #{LinkedIn::VERSION::STRING}"
