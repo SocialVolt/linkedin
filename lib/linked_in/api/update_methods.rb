@@ -15,6 +15,14 @@ module LinkedIn
       #   post(path, share_to_xml(defaults.merge(options)))
       # end
       #
+      
+      def comment_to_xml(comment)
+        doc = Nokogiri.XML('<update-comment><comment/><update-comment/>')
+        doc.encoding = 'UTF-8'
+        doc.at_css('comment').content = comment
+        doc.to_xml
+      end
+      
       def update_comment(network_key, comment)
         path = "/people/~/network/updates/key=#{network_key}/update-comments"
         post(path, comment_to_xml(comment))
