@@ -9,20 +9,21 @@ module LinkedIn
         post(path, defaults.merge(share).to_json, "Content-Type" => "application/json")
       end
 
-      def send_message(subject, body, recipient_paths)
+      def send_message(subject, body, person_identifier)
         path = "/people/~/mailbox"
-
-        message         = LinkedIn::Message.new
-        message.subject = subject
-        message.body    = body
-        recipients      = LinkedIn::Recipients.new
-
-        recipients.recipients = recipient_paths.map do |profile_path|
-          Struct.new(:person).new(Struct.new(:path).new("/people/#{profile_path}"))
-        end
-
-        message.recipients = recipients
-        post(path, message_to_xml(message)).code
+        payload = {
+          "recipients" => {
+            "values" => [
+            {
+              "person" => {
+                "_path" => "/people/#{person_identifier}",
+               }
+            }]
+          },
+          "subject" => subject,
+          "body" => body
+        }
+        post(path, payload.to_json, "Content-Type" => "application/json").code
       end
       
       def comment_to_xml(comment)
@@ -77,25 +78,4 @@ module LinkedIn
     end
 
   end
-end
-
-module LinkedIn
-  class Message
-
-    attr_accessor :subject, :body, :recipients
-  
-    def to_xml
-      self.to_xml_node(Nokogiri.XML('<root/>', nil, 'UTF-8')).to_xml
-    end
-
-    def to_xml_node(doc)
-      node = Nokogiri::XML::DocumentFragment.new(doc, '<mailbox-item><recipients/><subject/><body/></mailbox-item>')
-      node.at_css('recipients').add_child(self.recipients.to_xml_nodes(doc))
-      node.at_css('subject').content = self.subject
-      node.at_css('body').content = self.body
-      node
-    end
-
-  end
-
 end
